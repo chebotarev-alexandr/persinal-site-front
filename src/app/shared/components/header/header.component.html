@@ -1,0 +1,39 @@
+<header class="site-header">
+  <div class="container header-row">
+    <a class="brand" routerLink="/" (click)="close()">
+      @if (logo()) {
+        <img class="brand-logo" [src]="logo()" [alt]="siteName()" />
+      } @else {
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+      }
+      <span class="brand-name">{{ siteName() }}</span>
+    </a>
+
+    <nav class="nav" [class.open]="menuOpen()" aria-label="Основная навигация">
+      @for (item of navItems; track item.path) {
+        <a
+          [routerLink]="item.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.path === '/' }"
+          (click)="close()"
+        >
+          {{ item.label }}
+        </a>
+      }
+      <a class="nav-contact" routerLink="/contact" routerLinkActive="active" (click)="close()">Контакты</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="btn btn-primary header-cta" routerLink="/contact">Обсудить проект</a>
+      <button
+        class="burger"
+        type="button"
+        [attr.aria-expanded]="menuOpen()"
+        aria-label="Открыть меню"
+        (click)="toggle()"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>

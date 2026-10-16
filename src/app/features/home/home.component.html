@@ -1,0 +1,155 @@
+@if (hero(); as h) {
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        @if (h.eyebrow) {
+          <span class="section-eyebrow">{{ h.eyebrow }}</span>
+        }
+        <h1 class="hero-title">{{ h.title }}</h1>
+        @if (h.subtitle) {
+          <p class="hero-subtitle">{{ h.subtitle }}</p>
+        }
+        @if (h.typed_words.length) {
+          <div class="hero-typed">
+            <span class="typed-label">Мой стек:</span>
+            <app-typewriter [words]="h.typed_words" />
+          </div>
+        }
+        @if (h.description) {
+          <p class="hero-desc">{{ h.description }}</p>
+        }
+        <div class="hero-actions">
+          @if (isInternal(h.primary_btn_url)) {
+            <a class="btn btn-primary" [routerLink]="h.primary_btn_url">{{ h.primary_btn_text }}</a>
+          } @else {
+            <a class="btn btn-primary" [href]="h.primary_btn_url">{{ h.primary_btn_text }}</a>
+          }
+          @if (h.secondary_btn_text) {
+            @if (isInternal(h.secondary_btn_url)) {
+              <a class="btn btn-outline" [routerLink]="h.secondary_btn_url">{{ h.secondary_btn_text }}</a>
+            } @else {
+              <a class="btn btn-outline" [href]="h.secondary_btn_url">{{ h.secondary_btn_text }}</a>
+            }
+          }
+        </div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="code-card">
+          <div class="code-head">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="code-file">main.py</span>
+          </div>
+          <div class="code-body">
+            <div class="code-line"><span class="code-k">from</span> idea <span class="code-k">import</span> product</div>
+            <div class="code-line blank"></div>
+            <div class="code-line"><span class="code-f">def</span> <span class="code-call">build</span>(idea):</div>
+            <div class="code-line indent"><span class="code-k">return</span> idea.<span class="code-call">ship</span>()</div>
+            <div class="code-line blank"></div>
+            <div class="code-line"><span class="code-c"># Django · FastAPI · Angular · ClickHouse</span></div>
+          </div>
+        </div>
+        <div class="hero-badges">
+          <span class="chip hero-chip">5+ лет опыта</span>
+          <span class="chip hero-chip">30+ проектов</span>
+        </div>
+      </div>
+    </div>
+
+    @if (stats().length) {
+      <div class="container">
+        <div class="stats-row">
+          @for (s of stats(); track s.id) {
+            <div class="stat" appReveal>
+              <span class="stat-value gradient-text">{{ s.value }}</span>
+              <span class="stat-label">{{ s.label }}</span>
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </section>
+}
+
+@if (services().length) {
+  <section class="section" id="services">
+    <div class="container">
+      <app-section-heading
+        eyebrow="Услуги"
+        title="Что я делаю"
+        subtitle="Беру задачи целиком: от идеи и проектирования до запуска и поддержки."
+      />
+      <div class="grid-3">
+        @for (s of services(); track s.id) {
+          <app-service-card [service]="s" appReveal />
+        }
+      </div>
+      <div class="section-more">
+        <a class="btn btn-outline" routerLink="/services">Все услуги и цены</a>
+      </div>
+    </div>
+  </section>
+}
+
+@if (process().length) {
+  <section class="section section-alt">
+    <div class="container">
+      <app-section-heading eyebrow="Процесс" title="Как я работаю" center />
+      <div class="process-grid">
+        @for (step of process(); track step.id; let i = $index) {
+          <div class="process-step" appReveal>
+            <span class="process-num">{{ i + 1 }}</span>
+            <h3 class="process-title">{{ step.title }}</h3>
+            <p class="process-desc">{{ step.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+@if (projects().length) {
+  <section class="section">
+    <div class="container">
+      <app-section-heading
+        eyebrow="Портфолио"
+        title="Избранные проекты"
+        subtitle="Реальные кейсы: телеметрия, гео-сервисы, боты и корпоративные порталы."
+      />
+      <div class="grid-3">
+        @for (p of projects(); track p.id) {
+          <app-project-card [project]="p" appReveal />
+        }
+      </div>
+      <div class="section-more">
+        <a class="btn btn-outline" routerLink="/projects">Все проекты</a>
+      </div>
+    </div>
+  </section>
+}
+
+@if (testimonials().length) {
+  <section class="section section-alt">
+    <div class="container">
+      <app-section-heading eyebrow="Отзывы" title="Что говорят клиенты" center />
+      <div class="grid-3">
+        @for (t of testimonials(); track t.id) {
+          <figure class="card testimonial" appReveal>
+            <div class="t-stars" aria-hidden="true">
+              @for (i of [1, 2, 3, 4, 5]; track i) {
+                <span [class.dim]="i > t.rating">★</span>
+              }
+            </div>
+            <blockquote class="t-text">{{ t.text }}</blockquote>
+            <figcaption class="t-author">
+              <span class="t-name">{{ t.author }}</span>
+              <span class="t-role">{{ t.position }}@if (t.company) { · {{ t.company }} }</span>
+            </figcaption>
+          </figure>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<app-cta />

@@ -1,0 +1,34 @@
+@if (post.value(); as p) {
+  <article class="post">
+    <div class="container post-narrow">
+      <a class="back-link" routerLink="/blog">← Все статьи</a>
+      <h1 class="post-title">{{ p.title }}</h1>
+      <div class="post-meta">
+        @if (p.published_at) {
+          <span>{{ formatDate(p.published_at) }}</span>
+        }
+        <span>· {{ p.reading_time }} мин чтения</span>
+      </div>
+      @if (p.cover) {
+        <img class="post-cover" [src]="p.cover" [alt]="p.title" />
+      }
+      @if (p.tags.length) {
+        <div class="post-tags">
+          @for (t of p.tags; track t) {
+            <span class="chip">{{ t }}</span>
+          }
+        </div>
+      }
+      <div class="prose post-content">{{ p.content }}</div>
+    </div>
+  </article>
+} @else if (post.isLoading()) {
+  <section class="section"><div class="container">Загрузка…</div></section>
+} @else {
+  <section class="section">
+    <div class="container">
+      <h1>Статья не найдена</h1>
+      <a class="btn btn-outline" routerLink="/blog">← Все статьи</a>
+    </div>
+  </section>
+}

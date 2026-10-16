@@ -1,0 +1,64 @@
+@if (service.value(); as s) {
+  <section class="page-hero">
+    <div class="container">
+      <a class="back-link" routerLink="/services">← Все услуги</a>
+      <div class="sd-head">
+        <span class="sd-icon" aria-hidden="true">{{ s.icon || '⚡' }}</span>
+        <div>
+          <h1 class="sd-title">{{ s.title }}</h1>
+          @if (s.category) {
+            <span class="badge">{{ s.category.name }}</span>
+          }
+        </div>
+      </div>
+      <div class="sd-meta">
+        <span class="sd-price">{{ priceLabel(s) }}</span>
+        @if (s.duration) {
+          <span class="chip">{{ s.duration }}</span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container sd-grid">
+      <div class="sd-main">
+        @if (s.description) {
+          <p class="sd-desc">{{ s.description }}</p>
+        }
+        @if (s.features.length) {
+          <h2 class="sd-h2">Что входит</h2>
+          <ul class="sd-list">
+            @for (f of s.features; track f) {
+              <li>✓ {{ f }}</li>
+            }
+          </ul>
+        }
+        @if (s.stack.length) {
+          <h2 class="sd-h2">Технологии</h2>
+          <div class="sd-stack">
+            @for (t of s.stack; track t) {
+              <span class="chip">{{ t }}</span>
+            }
+          </div>
+        }
+      </div>
+
+      <aside class="card sd-side">
+        <h2 class="sd-h2">Заказать услугу</h2>
+        <app-order-form [preselectedSlug]="s.slug" />
+      </aside>
+    </div>
+  </section>
+} @else if (service.isLoading()) {
+  <section class="section"><div class="container">Загрузка…</div></section>
+} @else {
+  <section class="section">
+    <div class="container">
+      <h1 class="sd-title">Услуга не найдена</h1>
+      <a class="btn btn-outline" routerLink="/services">← Все услуги</a>
+    </div>
+  </section>
+}
+
+<app-cta />

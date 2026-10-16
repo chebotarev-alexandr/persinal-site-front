@@ -1,0 +1,44 @@
+<section class="page-hero">
+  <div class="container">
+    <app-section-heading eyebrow="Блог" title="Статьи и заметки" subtitle="Пишу о разработке, стеке и практике." center />
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    @if (posts().length) {
+      <div class="grid-3">
+        @for (p of posts(); track p.id) {
+          <a class="card post-card" [routerLink]="['/blog', p.slug]" appReveal>
+            @if (p.cover) {
+              <img class="post-cover" [src]="p.cover" [alt]="p.title" loading="lazy" />
+            } @else {
+              <div class="post-cover post-placeholder" aria-hidden="true">#</div>
+            }
+            <div class="post-body">
+              <div class="post-meta">
+                @if (p.published_at) {
+                  <span>{{ formatDate(p.published_at) }}</span>
+                }
+                <span>· {{ p.reading_time }} мин</span>
+              </div>
+              <h2 class="post-title">{{ p.title }}</h2>
+              @if (p.excerpt) {
+                <p class="post-excerpt">{{ p.excerpt }}</p>
+              }
+              @if (p.tags.length) {
+                <div class="post-tags">
+                  @for (t of p.tags; track t) {
+                    <span class="chip">{{ t }}</span>
+                  }
+                </div>
+              }
+            </div>
+          </a>
+        }
+      </div>
+    } @else {
+      <p class="empty">Статьи скоро появятся.</p>
+    }
+  </div>
+</section>

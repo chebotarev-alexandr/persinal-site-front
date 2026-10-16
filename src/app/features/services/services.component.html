@@ -1,0 +1,88 @@
+<section class="page-hero">
+  <div class="container">
+    <app-section-heading
+      eyebrow="Услуги"
+      title="Услуги и цены"
+      subtitle="Помогу на любом этапе: спроектировать, разработать, запустить и поддерживать. Точную оценку дам после брифа."
+      center
+    />
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    @for (group of grouped(); track group.key) {
+      <div class="cat-block" appReveal>
+        @if (group.category) {
+          <h2 class="cat-title">{{ group.category.name }}</h2>
+          @if (group.category.description) {
+            <p class="cat-desc">{{ group.category.description }}</p>
+          }
+        }
+        <div class="grid-3">
+          @for (s of group.services; track s.id) {
+            <app-service-card [service]="s" />
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>
+
+@if (pricing().length) {
+  <section class="section section-alt">
+    <div class="container">
+      <app-section-heading eyebrow="Тарифы" title="Готовые пакеты" center />
+      <div class="pricing-grid">
+        @for (p of pricing(); track p.id) {
+          <div class="card pricing-card" [class.popular]="p.is_popular">
+            @if (p.badge) {
+              <span class="badge">{{ p.badge }}</span>
+            }
+            <h3 class="pricing-name">{{ p.name }}</h3>
+            <p class="pricing-desc">{{ p.description }}</p>
+            <div class="pricing-price">
+              @if (p.price != null) {
+                <span class="price-value">{{ formatPrice(p.price) }}</span>
+                @if (p.period) {
+                  <span class="price-period">{{ p.period }}</span>
+                }
+              } @else {
+                <span class="price-value">По запросу</span>
+              }
+            </div>
+            @if (p.features.length) {
+              <ul class="pricing-features">
+                @for (f of p.features; track f) {
+                  <li>✓ {{ f }}</li>
+                }
+              </ul>
+            }
+            <a class="btn" [class.btn-primary]="p.is_popular" [class.btn-outline]="!p.is_popular" routerLink="/contact">
+              Выбрать
+            </a>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+@if (process().length) {
+  <section class="section">
+    <div class="container">
+      <app-section-heading eyebrow="Процесс" title="Как я работаю" center />
+      <div class="process-grid">
+        @for (step of process(); track step.id; let i = $index) {
+          <div class="process-step" appReveal>
+            <span class="process-num">{{ i + 1 }}</span>
+            <h3 class="process-title">{{ step.title }}</h3>
+            <p class="process-desc">{{ step.description }}</p>
+          </div>
+        }
+      </div>
+    </div>
+  </section>
+}
+
+<app-cta />

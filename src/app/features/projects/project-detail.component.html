@@ -1,0 +1,86 @@
+@if (project.value(); as p) {
+  <section class="page-hero">
+    <div class="container">
+      <a class="back-link" routerLink="/projects">← Все проекты</a>
+      <div class="pd-head">
+        <h1 class="pd-title">{{ p.title }}</h1>
+        <div class="pd-meta">
+          @if (p.year) {
+            <span class="badge">{{ p.year }}</span>
+          }
+          @if (p.client) {
+            <span class="chip">{{ p.client }}</span>
+          }
+          @for (t of p.tags; track t.id) {
+            <span class="chip">{{ t.name }}</span>
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container pd-grid">
+      <div class="pd-main">
+        @if (p.cover) {
+          <img class="pd-cover" [src]="p.cover" [alt]="p.title" />
+        } @else {
+          <div class="pd-cover pd-placeholder" aria-hidden="true">&lt;/&gt;</div>
+        }
+
+        @if (p.description) {
+          <h2 class="pd-h2">О проекте</h2>
+          <p class="pd-desc">{{ p.description }}</p>
+        }
+
+        @if (p.results.length) {
+          <h2 class="pd-h2">Результаты</h2>
+          <ul class="pd-list">
+            @for (r of p.results; track r) {
+              <li>✓ {{ r }}</li>
+            }
+          </ul>
+        }
+
+        @if (p.images.length) {
+          <h2 class="pd-h2">Галерея</h2>
+          <div class="pd-gallery">
+            @for (img of p.images; track img.id) {
+              <img [src]="img.image" [alt]="img.alt || p.title" loading="lazy" />
+            }
+          </div>
+        }
+      </div>
+
+      <aside class="pd-side">
+        @if (p.stack.length) {
+          <h3 class="pd-side-title">Стек</h3>
+          <div class="pd-stack">
+            @for (t of p.stack; track t) {
+              <span class="chip">{{ t }}</span>
+            }
+          </div>
+        }
+        <div class="pd-links">
+          @if (p.url) {
+            <a class="btn btn-primary" [href]="p.url" target="_blank" rel="noopener">Смотреть проект</a>
+          }
+          @if (p.repository_url) {
+            <a class="btn btn-outline" [href]="p.repository_url" target="_blank" rel="noopener">Исходный код</a>
+          }
+        </div>
+      </aside>
+    </div>
+  </section>
+} @else if (project.isLoading()) {
+  <section class="section"><div class="container">Загрузка…</div></section>
+} @else {
+  <section class="section">
+    <div class="container">
+      <h1 class="pd-title">Проект не найден</h1>
+      <a class="btn btn-outline" routerLink="/projects">← Все проекты</a>
+    </div>
+  </section>
+}
+
+<app-cta />

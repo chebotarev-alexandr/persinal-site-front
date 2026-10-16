@@ -1,0 +1,109 @@
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  transition: color 0.15s ease;
+}
+
+.back-link:hover {
+  color: var(--accent);
+}
+
+.sd-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sd-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 1rem;
+  font-size: 1.7rem;
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+}
+
+.sd-title {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.sd-head .badge {
+  margin-top: 0.5rem;
+}
+
+.sd-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.sd-price {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.sd-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 2.5rem;
+  align-items: start;
+}
+
+.sd-desc {
+  color: var(--text-muted);
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.sd-h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.9rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.sd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sd-list li {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.sd-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.sd-side {
+  padding: 1.75rem;
+  position: sticky;
+  top: 6rem;
+}
+
+@media (max-width: 900px) {
+  .sd-grid {
+    grid-template-columns: 1fr;
+  }
+  .sd-side {
+    position: static;
+  }
+}

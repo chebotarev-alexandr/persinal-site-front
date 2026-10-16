@@ -1,0 +1,151 @@
+.cat-block {
+  margin-bottom: 3rem;
+}
+
+.cat-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.cat-desc {
+  margin-top: 0.4rem;
+  margin-bottom: 1.25rem;
+  color: var(--text-muted);
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+/* Pricing */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+
+.pricing-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.75rem;
+}
+
+.pricing-card.popular {
+  border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+  background:
+    linear-gradient(160deg, color-mix(in srgb, var(--accent) 10%, transparent), transparent 60%),
+    var(--surface);
+}
+
+.pricing-card .badge {
+  align-self: flex-start;
+}
+
+.pricing-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.pricing-desc {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.pricing-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+}
+
+.price-value {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.price-period {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.pricing-features {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pricing-features li {
+  color: var(--text-muted);
+  font-size: 0.92rem;
+}
+
+.pricing-card .btn {
+  margin-top: 0.5rem;
+}
+
+/* Process */
+.process-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.25rem;
+}
+
+.process-step {
+  padding: 1.4rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.process-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.7rem;
+  font-weight: 800;
+  color: var(--accent-contrast);
+  background: linear-gradient(130deg, var(--accent), var(--accent-2));
+}
+
+.process-title {
+  margin-top: 0.9rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.process-desc {
+  margin-top: 0.4rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .grid-3,
+  .pricing-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .process-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .grid-3,
+  .pricing-grid,
+  .process-grid {
+    grid-template-columns: 1fr;
+  }
+}

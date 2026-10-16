@@ -1,0 +1,31 @@
+<section class="page-hero">
+  <div class="container">
+    <app-section-heading
+      eyebrow="FAQ"
+      title="Вопросы и ответы"
+      subtitle="Частые вопросы о сотрудничестве, оплате и сроках."
+      center
+    />
+  </div>
+</section>
+
+<section class="section">
+  <div class="container faq-narrow">
+    @for (cat of categories(); track cat.id) {
+      <h2 class="faq-cat">{{ cat.name }}</h2>
+      <div class="faq-list">
+        @for (item of cat.items; track item.id) {
+          <div class="card faq-item" appReveal>
+            <button class="faq-q" type="button" [attr.aria-expanded]="openId() === item.id" (click)="toggle(item.id)">
+              <span>{{ item.question }}</span>
+              <span class="faq-icon" aria-hidden="true">{{ openId() === item.id ? '−' : '+' }}</span>
+            </button>
+            @if (openId() === item.id) {
+              <div class="faq-a">{{ item.answer }}</div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

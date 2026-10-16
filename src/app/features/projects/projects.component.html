@@ -1,0 +1,35 @@
+<section class="page-hero">
+  <div class="container">
+    <app-section-heading
+      eyebrow="Портфолио"
+      title="Проекты"
+      subtitle="Кейсы из практики: от систем телеметрии до телеграм-ботов и корпоративных порталов."
+      center
+    />
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    @if (tags().length) {
+      <div class="tag-filter" appReveal>
+        <button class="chip" [class.active]="!activeTag()" (click)="setTag(null)">Все</button>
+        @for (t of tags(); track t[0]) {
+          <button class="chip" [class.active]="activeTag() === t[0]" (click)="setTag(t[0])">{{ t[1] }}</button>
+        }
+      </div>
+    }
+
+    @if (filtered().length) {
+      <div class="grid-3">
+        @for (p of filtered(); track p.id) {
+          <app-project-card [project]="p" appReveal />
+        }
+      </div>
+    } @else {
+      <p class="empty">Пока нет проектов в этой категории.</p>
+    }
+  </div>
+</section>
+
+<app-cta />

@@ -1,0 +1,129 @@
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-photo {
+  width: 100%;
+  max-height: 22rem;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.about-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+  font-size: 3rem;
+  font-family: monospace;
+  color: color-mix(in srgb, var(--accent) 55%, var(--text));
+  background:
+    linear-gradient(130deg, color-mix(in srgb, var(--accent) 22%, transparent), color-mix(in srgb, var(--accent-3) 14%, transparent)),
+    var(--surface);
+}
+
+.about-text {
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+  line-height: 1.75;
+  white-space: pre-line;
+}
+
+.about-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  list-style: none;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+.about-highlights li {
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.skill-group {
+  margin-bottom: 2rem;
+}
+
+.skill-group-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  margin-bottom: 1rem;
+}
+
+.skill {
+  margin-bottom: 1rem;
+}
+
+.skill-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.skill-years {
+  color: var(--text-faint);
+  font-size: 0.82rem;
+}
+
+.skill-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--surface-strong);
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+}
+
+.tech-groups {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.tech-group {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.tech-group-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin-bottom: 0.9rem;
+}
+
+.tech-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+@media (max-width: 900px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+  }
+  .tech-groups {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .tech-groups {
+    grid-template-columns: 1fr;
+  }
+}

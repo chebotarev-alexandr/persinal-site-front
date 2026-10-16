@@ -1,0 +1,62 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col footer-about">
+        <a class="footer-brand" routerLink="/">
+          <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+          <span>{{ settings()?.site_name }}</span>
+        </a>
+        <p class="footer-desc">{{ settings()?.footer_description }}</p>
+        <div class="footer-socials">
+          @for (s of socials(); track s.id) {
+            <a [href]="s.url" [attr.aria-label]="s.platform_label" target="_blank" rel="noopener">
+              <app-social-icon [platform]="s.platform" />
+            </a>
+          }
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Навигация</h4>
+        <ul class="footer-list">
+          @for (item of navItems; track item.path) {
+            <li><a [routerLink]="item.path">{{ item.label }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Услуги</h4>
+        <ul class="footer-list">
+          @for (s of services(); track s.id) {
+            <li><a [routerLink]="['/services', s.slug]">{{ s.title }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 class="footer-title">Контакты</h4>
+        <ul class="footer-list">
+          @if (settings()?.email) {
+            <li><a [href]="'mailto:' + settings()?.email">{{ settings()?.email }}</a></li>
+          }
+          @if (settings()?.phone) {
+            <li><a [href]="'tel:' + settings()?.phone">{{ settings()?.phone }}</a></li>
+          }
+          @if (settings()?.city) {
+            <li>{{ settings()?.city }}</li>
+          }
+          @if (settings()?.work_hours) {
+            <li class="footer-muted">{{ settings()?.work_hours }}</li>
+          }
+        </ul>
+        <app-subscribe-form class="footer-subscribe" />
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>{{ settings()?.copyright_text }}</span>
+      <span class="footer-muted">Работаю удалённо · {{ settings()?.city }}</span>
+    </div>
+  </div>
+</footer>
