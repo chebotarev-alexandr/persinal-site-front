@@ -14,11 +14,14 @@ components, signals, zoneless change detection) + **Tailwind CSS 4**. Весь �
 
 ```bash
 npm install
-npm start            # http://localhost:4200
+npm start            # http://localhost:4200 (проксирует /api на http://localhost:8000)
 ```
 
-API-адрес задаётся в `src/environments/environment.ts` (dev) и
-`environment.prod.ts` (prod — относительный `/api/v1`, предполагает reverse-proxy).
+Для `npm start` нужен запущенный бэкенд на `:8000` — dev-сервер проксирует
+`/api` и `/media` на него (см. `proxy.conf.json`).
+
+API-адрес: `src/environments/environment.ts` (dev, относительный `/api/v1`) и
+`environment.prod.ts` (prod, относительный `/api/v1` — отдаётся nginx).
 
 ## Структура
 
