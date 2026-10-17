@@ -19,19 +19,6 @@
   font-size: 1.05rem;
 }
 
-.brand-mark {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.6rem;
-  font-family: monospace;
-  font-size: 0.8rem;
-  color: var(--accent-contrast);
-  background: linear-gradient(130deg, var(--accent), var(--accent-2));
-}
-
 .footer-desc {
   margin-top: 1rem;
   max-width: 20rem;

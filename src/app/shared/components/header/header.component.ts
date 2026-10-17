@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@a
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 import { ContentService } from '../../../core/services/content.service';
+import { LogoMarkComponent } from '../logo-mark/logo-mark.component';
 
 interface NavItem {
   label: string;
@@ -11,7 +12,7 @@ interface NavItem {
 @Component({
   selector: 'app-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, LogoMarkComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })

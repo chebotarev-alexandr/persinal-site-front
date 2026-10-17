@@ -4,11 +4,12 @@ import { RouterLink } from '@angular/router';
 import { ContentService } from '../../../core/services/content.service';
 import { SocialIconComponent } from '../social-icon/social-icon.component';
 import { SubscribeFormComponent } from '../forms/subscribe-form.component';
+import { LogoMarkComponent } from '../logo-mark/logo-mark.component';
 
 @Component({
   selector: 'app-footer',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, SocialIconComponent, SubscribeFormComponent],
+  imports: [RouterLink, SocialIconComponent, SubscribeFormComponent, LogoMarkComponent],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss',
 })
