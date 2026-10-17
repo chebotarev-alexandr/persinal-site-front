@@ -1,5 +1,6 @@
-import { computed, inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { httpResource } from '@angular/common/http';
+import { isPlatformServer } from '@angular/common';
 
 import { environment } from '../../../environments/environment';
 import type {
@@ -24,9 +25,23 @@ import type {
  */
 @Injectable({ providedIn: 'root' })
 export class ContentService {
-  readonly apiUrl = environment.apiUrl;
+  private readonly platformId = inject(PLATFORM_ID);
 
-  private readonly url = (path: string) => `${environment.apiUrl}${path}`;
+  /**
+   * API base URL. Browser: relative (/api/v1) via the nginx proxy. SSR: the
+   * Node process must reach the backend directly, so an absolute URL is used
+   * (API_URL env, defaulting to the docker-compose `backend` service).
+   */
+  readonly apiUrl = isPlatformServer(this.platformId)
+    ? this.serverApiUrl()
+    : environment.apiUrl;
+
+  private readonly url = (path: string) => `${this.apiUrl}${path}`;
+
+  private serverApiUrl(): string {
+    const env = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env;
+    return env?.['API_URL'] ?? 'http://backend:8000/api/v1';
+  }
 
   readonly site = httpResource<Site>(() => this.url('/site/'));
   readonly services = httpResource<Paginated<Service>>(() => this.url('/services/'));

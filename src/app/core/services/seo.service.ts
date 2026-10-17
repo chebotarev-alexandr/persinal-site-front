@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
 import type { SiteSettings } from '../models/models';
@@ -8,6 +9,7 @@ import type { SiteSettings } from '../models/models';
 export class SeoService {
   private readonly title = inject(Title);
   private readonly meta = inject(Meta);
+  private readonly platformId = inject(PLATFORM_ID);
 
   applySiteSettings(settings: SiteSettings | undefined): void {
     if (!settings) return;
@@ -16,10 +18,13 @@ export class SeoService {
     this.title.setTitle(title);
     this.meta.updateTag({ name: 'description', content: settings.meta_description || settings.description });
 
-    document.documentElement.style.setProperty('--accent', settings.accent_color || '#6366f1');
+    // Direct DOM access is unavailable during SSR — skip it server-side.
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.style.setProperty('--accent', settings.accent_color || '#6366f1');
 
-    if (settings.analytics_code) {
-      this.injectAnalytics(settings.analytics_code);
+      if (settings.analytics_code) {
+        this.injectAnalytics(settings.analytics_code);
+      }
     }
   }
 

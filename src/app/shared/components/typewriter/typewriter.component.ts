@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, signal } from '@angular/core';
+import { afterNextRender, ChangeDetectionStrategy, Component, input, OnDestroy, signal } from '@angular/core';
 
 /** Types/deletes words in a loop (used in the hero). */
 @Component({
@@ -18,7 +18,7 @@ import { ChangeDetectionStrategy, Component, input, OnDestroy, OnInit, signal } 
     }
   `,
 })
-export class TypewriterComponent implements OnInit, OnDestroy {
+export class TypewriterComponent implements OnDestroy {
   readonly words = input<string[]>([]);
 
   protected readonly text = signal('');
@@ -27,9 +27,10 @@ export class TypewriterComponent implements OnInit, OnDestroy {
   private readonly deleting = signal(false);
   private timer: ReturnType<typeof setTimeout> | null = null;
 
-  ngOnInit(): void {
-    // Inputs aren't available in the constructor — start once `words` is bound.
-    this.step();
+  constructor() {
+    // Start in the browser only: inputs are bound by now and afterNextRender
+    // never runs during SSR (avoiding stray timers on the Node server).
+    afterNextRender(() => this.step());
   }
 
   private step(): void {
