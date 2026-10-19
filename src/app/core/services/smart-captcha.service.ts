@@ -2,18 +2,20 @@ import { Injectable } from '@angular/core';
 
 interface SmartCaptchaApi {
   render(container: HTMLElement, options: Record<string, unknown>): number;
-  getToken(widgetId: number, callback: (token: string) => void): void;
+  execute(widgetId?: number): void;
 }
 
 /**
  * Loads the Yandex SmartCaptcha script and renders one invisible widget.
- * The token is collected on every submit; the backend only enforces it on
- * repeat submissions from the same IP (LEAD_RATE_LIMIT_PER_DAY).
+ * On submit it calls `execute()`, and the token arrives via the render
+ * `callback`; the backend only enforces it on repeat submissions from the
+ * same IP (LEAD_RATE_LIMIT_PER_DAY).
  */
 @Injectable({ providedIn: 'root' })
 export class SmartCaptchaService {
   private clientKey = '';
   private widgetId: number | null = null;
+  private pending: ((token: string) => void) | null = null;
 
   /** Idempotent: stores the key and starts loading the script once. */
   configure(clientKey: string): void {
@@ -26,13 +28,13 @@ export class SmartCaptchaService {
     if (document.getElementById('smartcaptcha-script')) return;
     const script = document.createElement('script');
     script.id = 'smartcaptcha-script';
-    script.src = 'https://smartcaptcha.yandexcloud.net/captcha.js';
+    script.src = 'https://smartcaptcha.cloud.yandex.ru/captcha.js';
     script.async = true;
     script.defer = true;
     document.head.appendChild(script);
   }
 
-  /** Resolves to a token, or '' when captcha is unavailable. */
+  /** Starts the check and resolves to a token, or '' when captcha is unavailable. */
   getToken(): Promise<string> {
     return new Promise((resolve) => {
       if (!this.clientKey) {
@@ -51,20 +53,29 @@ export class SmartCaptchaService {
               sitekey: this.clientKey,
               invisible: true,
               hl: 'ru',
+              callback: (token: string) => this.onToken(token),
             });
           }
-          sc.getToken(this.widgetId, (token: string) => resolve(token ?? ''));
+          this.pending = resolve;
+          sc.execute(this.widgetId);
+          // Fallback: если проверка не завершилась за 30 с — резолвим пустым.
+          setTimeout(() => this.onToken(''), 30000);
         },
         () => resolve(''),
       );
     });
   }
 
+  private onToken(token: string): void {
+    if (this.pending) {
+      const resolve = this.pending;
+      this.pending = null;
+      resolve(token || '');
+    }
+  }
+
   /** Waits for the script to load (up to ~5 s), then invokes cb or onTimeout. */
-  private withApi(
-    cb: (sc: SmartCaptchaApi) => void,
-    onTimeout: () => void,
-  ): void {
+  private withApi(cb: (sc: SmartCaptchaApi) => void, onTimeout: () => void): void {
     const api = (): SmartCaptchaApi | undefined =>
       (window as unknown as { smartCaptcha?: SmartCaptchaApi }).smartCaptcha;
 
