@@ -95,6 +95,6 @@ export class OrderFormComponent extends LeadFormBase {
   }
 
   protected override send() {
-    return this.leads.order(this.form.value as OrderPayload);
+    return this.leads.order({ ...this.form.value, smart_token: this.smartToken() } as OrderPayload);
   }
 }

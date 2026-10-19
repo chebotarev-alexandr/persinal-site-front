@@ -61,6 +61,6 @@ export class SubscribeFormComponent extends LeadFormBase {
   });
 
   protected override send() {
-    return this.leads.subscribe(this.form.value as SubscribePayload);
+    return this.leads.subscribe({ ...this.form.value, smart_token: this.smartToken() } as SubscribePayload);
   }
 }

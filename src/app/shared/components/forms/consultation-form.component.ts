@@ -62,6 +62,6 @@ export class ConsultationFormComponent extends LeadFormBase {
   });
 
   protected override send() {
-    return this.leads.consultation(this.form.value as ConsultationPayload);
+    return this.leads.consultation({ ...this.form.value, smart_token: this.smartToken() } as ConsultationPayload);
   }
 }

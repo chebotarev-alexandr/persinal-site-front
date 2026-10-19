@@ -62,6 +62,6 @@ export class CallbackFormComponent extends LeadFormBase {
   });
 
   protected override send() {
-    return this.leads.callback(this.form.value as CallbackPayload);
+    return this.leads.callback({ ...this.form.value, smart_token: this.smartToken() } as CallbackPayload);
   }
 }

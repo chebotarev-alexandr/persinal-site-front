@@ -31,6 +31,7 @@ export interface SiteSettings {
   meta_title: string;
   meta_description: string;
   analytics_code: string;
+  smartcaptcha_client_key: string;
 }
 
 export interface SocialLink {
@@ -231,12 +232,14 @@ export interface ContactPayload {
   email: string;
   phone?: string;
   message?: string;
+  smart_token?: string;
 }
 
 export interface CallbackPayload {
   name: string;
   phone: string;
   message?: string;
+  smart_token?: string;
 }
 
 export interface OrderPayload {
@@ -245,6 +248,7 @@ export interface OrderPayload {
   email?: string;
   service?: string;
   message?: string;
+  smart_token?: string;
 }
 
 export interface BriefPayload {
@@ -256,14 +260,17 @@ export interface BriefPayload {
   budget?: number | null;
   deadline?: string;
   message?: string;
+  smart_token?: string;
 }
 
 export interface ConsultationPayload {
   name: string;
   phone: string;
   message?: string;
+  smart_token?: string;
 }
 
 export interface SubscribePayload {
   email: string;
+  smart_token?: string;
 }

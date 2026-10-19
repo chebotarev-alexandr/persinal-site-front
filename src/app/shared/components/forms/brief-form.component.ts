@@ -102,6 +102,6 @@ export class BriefFormComponent extends LeadFormBase {
   });
 
   protected override send() {
-    return this.leads.brief(this.form.value as BriefPayload);
+    return this.leads.brief({ ...this.form.value, smart_token: this.smartToken() } as BriefPayload);
   }
 }

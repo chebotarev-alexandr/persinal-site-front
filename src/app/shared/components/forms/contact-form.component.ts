@@ -70,6 +70,6 @@ export class ContactFormComponent extends LeadFormBase {
   });
 
   protected override send() {
-    return this.leads.contact(this.form.value as ContactPayload);
+    return this.leads.contact({ ...this.form.value, smart_token: this.smartToken() } as ContactPayload);
   }
 }
