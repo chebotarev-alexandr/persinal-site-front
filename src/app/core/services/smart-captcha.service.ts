@@ -7,7 +7,7 @@ interface SmartCaptchaApi {
 
 /**
  * Loads the Yandex SmartCaptcha script and renders one invisible widget.
- * The token is always collected on submit; the backend only validates it on
+ * The token is collected on every submit; the backend only enforces it on
  * repeat submissions from the same IP (LEAD_RATE_LIMIT_PER_DAY).
  */
 @Injectable({ providedIn: 'root' })
@@ -35,24 +35,55 @@ export class SmartCaptchaService {
   /** Resolves to a token, or '' when captcha is unavailable. */
   getToken(): Promise<string> {
     return new Promise((resolve) => {
-      const sc = (window as unknown as { smartCaptcha?: SmartCaptchaApi }).smartCaptcha;
-      if (!sc || !this.clientKey) {
+      if (!this.clientKey) {
         resolve('');
         return;
       }
-      if (this.widgetId === null) {
-        const container = document.createElement('div');
-        container.style.width = '0';
-        container.style.height = '0';
-        container.style.overflow = 'hidden';
-        document.body.appendChild(container);
-        this.widgetId = sc.render(container, {
-          sitekey: this.clientKey,
-          invisible: true,
-          hl: 'ru',
-        });
-      }
-      sc.getToken(this.widgetId, (token: string) => resolve(token ?? ''));
+      this.withApi(
+        (sc) => {
+          if (this.widgetId === null) {
+            const container = document.createElement('div');
+            container.style.width = '0';
+            container.style.height = '0';
+            container.style.overflow = 'hidden';
+            document.body.appendChild(container);
+            this.widgetId = sc.render(container, {
+              sitekey: this.clientKey,
+              invisible: true,
+              hl: 'ru',
+            });
+          }
+          sc.getToken(this.widgetId, (token: string) => resolve(token ?? ''));
+        },
+        () => resolve(''),
+      );
     });
+  }
+
+  /** Waits for the script to load (up to ~5 s), then invokes cb or onTimeout. */
+  private withApi(
+    cb: (sc: SmartCaptchaApi) => void,
+    onTimeout: () => void,
+  ): void {
+    const api = (): SmartCaptchaApi | undefined =>
+      (window as unknown as { smartCaptcha?: SmartCaptchaApi }).smartCaptcha;
+
+    const sc = api();
+    if (sc) {
+      cb(sc);
+      return;
+    }
+
+    let tries = 0;
+    const timer = setInterval(() => {
+      const loaded = api();
+      if (loaded) {
+        clearInterval(timer);
+        cb(loaded);
+      } else if (++tries >= 50) {
+        clearInterval(timer);
+        onTimeout();
+      }
+    }, 100);
   }
 }
