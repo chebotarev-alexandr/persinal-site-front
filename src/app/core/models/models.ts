@@ -226,6 +226,14 @@ export interface BudgetRange {
   label: string;
 }
 
+// --- chat ----------------------------------------------------------------
+export interface ChatMessage {
+  id: number;
+  direction: 'incoming' | 'outgoing';
+  text: string;
+  created_at: string;
+}
+
 // --- lead payloads -------------------------------------------------------
 export interface ContactPayload {
   name: string;
