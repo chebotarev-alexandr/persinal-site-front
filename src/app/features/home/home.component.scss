@@ -232,46 +232,6 @@
   line-height: 1.6;
 }
 
-/* Testimonials */
-.testimonial {
-  padding: 1.5rem;
-  margin: 0;
-}
-
-.t-stars {
-  color: #fbbf24;
-  letter-spacing: 0.1em;
-}
-
-.t-stars .dim {
-  color: var(--border);
-}
-
-.t-text {
-  margin-top: 0.9rem;
-  color: var(--text);
-  line-height: 1.7;
-  font-size: 0.95rem;
-}
-
-.t-author {
-  margin-top: 1.25rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.t-name {
-  font-weight: 700;
-}
-
-.t-role {
-  color: var(--text-muted);
-  font-size: 0.85rem;
-}
-
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;

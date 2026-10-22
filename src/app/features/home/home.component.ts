@@ -7,6 +7,7 @@ import { CtaComponent } from '../../shared/components/cta/cta.component';
 import { TypewriterComponent } from '../../shared/components/typewriter/typewriter.component';
 import { ServiceCardComponent } from '../../shared/components/service-card/service-card.component';
 import { ProjectCardComponent } from '../../shared/components/project-card/project-card.component';
+import { TestimonialCarouselComponent } from '../../shared/components/testimonial-carousel/testimonial-carousel.component';
 import { RevealDirective } from '../../shared/directives/reveal.directive';
 
 @Component({
@@ -19,6 +20,7 @@ import { RevealDirective } from '../../shared/directives/reveal.directive';
     TypewriterComponent,
     ServiceCardComponent,
     ProjectCardComponent,
+    TestimonialCarouselComponent,
     RevealDirective,
   ],
   templateUrl: './home.component.html',

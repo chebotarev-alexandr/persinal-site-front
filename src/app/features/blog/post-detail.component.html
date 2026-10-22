@@ -19,7 +19,7 @@
           }
         </div>
       }
-      <div class="prose post-content">{{ p.content }}</div>
+      <div class="prose post-content" [innerHTML]="p.content | markdown"></div>
     </div>
   </article>
 } @else if (post.isLoading()) {

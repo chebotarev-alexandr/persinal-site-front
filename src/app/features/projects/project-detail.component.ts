@@ -6,12 +6,13 @@ import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ContentService } from '../../core/services/content.service';
 import { CtaComponent } from '../../shared/components/cta/cta.component';
+import { MarkdownPipe } from '../../shared/markdown.pipe';
 import type { Project } from '../../core/models/models';
 
 @Component({
   selector: 'app-project-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink, CtaComponent],
+  imports: [RouterLink, CtaComponent, MarkdownPipe],
   templateUrl: './project-detail.component.html',
   styleUrl: './project-detail.component.scss',
 })

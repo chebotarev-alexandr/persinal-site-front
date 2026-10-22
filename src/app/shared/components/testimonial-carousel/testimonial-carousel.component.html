@@ -1,0 +1,62 @@
+<div
+  class="tc"
+  (mouseenter)="onMouseEnter()"
+  (mouseleave)="onMouseLeave()"
+  (touchstart)="onTouchStart($event)"
+  (touchend)="onTouchEnd($event)"
+>
+  <div class="tc-viewport">
+    @for (i of dots(); track i) {
+      @if (i === index()) {
+        @if (testimonials()[i]; as t) {
+          <figure class="tc-card card tc-enter">
+            <span class="tc-quote" aria-hidden="true">"</span>
+            <div class="tc-stars" aria-hidden="true">
+              @for (s of [1, 2, 3, 4, 5]; track s) {
+                <span [class.dim]="s > t.rating">★</span>
+              }
+            </div>
+            <blockquote class="tc-text">{{ t.text }}</blockquote>
+            <figcaption class="tc-author">
+              @if (t.photo) {
+                <img class="tc-avatar" [src]="t.photo" [alt]="t.author" loading="lazy" />
+              } @else {
+                <span class="tc-avatar tc-initials" aria-hidden="true">{{ t.author.charAt(0) }}</span>
+              }
+              <div class="tc-author-meta">
+                <span class="tc-name">{{ t.author }}</span>
+                <span class="tc-role">{{ t.position }}@if (t.company) { · {{ t.company }} }</span>
+              </div>
+            </figcaption>
+          </figure>
+        }
+      }
+    }
+  </div>
+
+  @if (count() > 1) {
+    <div class="tc-controls">
+      <button class="tc-arrow" type="button" (click)="prev()" aria-label="Предыдущий отзыв">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 18 9 12 15 6" />
+        </svg>
+      </button>
+      <div class="tc-dots">
+        @for (i of dots(); track i) {
+          <button
+            class="tc-dot"
+            type="button"
+            [class.active]="i === index()"
+            (click)="goTo(i)"
+            [attr.aria-label]="'Отзыв ' + (i + 1)"
+          ></button>
+        }
+      </div>
+      <button class="tc-arrow" type="button" (click)="next()" aria-label="Следующий отзыв">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6" />
+        </svg>
+      </button>
+    </div>
+  }
+</div>

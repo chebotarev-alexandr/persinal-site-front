@@ -1,0 +1,176 @@
+.tc {
+  max-width: 52rem;
+  margin-inline: auto;
+}
+
+.tc-viewport {
+  min-height: 18rem;
+}
+
+.tc-card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 2.25rem 2.5rem;
+  margin: 0;
+}
+
+.tc-quote {
+  position: absolute;
+  top: 0.5rem;
+  right: 1.5rem;
+  font-family: Georgia, serif;
+  font-size: 6rem;
+  line-height: 1;
+  color: color-mix(in srgb, var(--accent) 22%, transparent);
+  pointer-events: none;
+  user-select: none;
+}
+
+.tc-stars {
+  color: #fbbf24;
+  letter-spacing: 0.15em;
+  font-size: 1rem;
+}
+
+.tc-stars .dim {
+  color: var(--border);
+}
+
+.tc-text {
+  margin: 1rem 0 0;
+  color: var(--text);
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.tc-author {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--border);
+}
+
+.tc-avatar {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.tc-initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--accent-contrast);
+  background: linear-gradient(130deg, var(--accent), var(--accent-2));
+}
+
+.tc-author-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tc-name {
+  font-weight: 700;
+}
+
+.tc-role {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.tc-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+.tc-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.tc-arrow svg {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.tc-arrow:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tc-arrow:active {
+  transform: scale(0.94);
+}
+
+.tc-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tc-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 999px;
+  border: none;
+  padding: 0;
+  background: var(--border);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.tc-dot.active {
+  width: 1.5rem;
+  background: linear-gradient(100deg, var(--accent), var(--accent-2));
+}
+
+/* Fade/slide entrance for the active slide */
+.tc-enter {
+  animation: tc-in 0.45s ease;
+}
+
+@keyframes tc-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 560px) {
+  .tc-card {
+    padding: 1.75rem 1.5rem;
+  }
+  .tc-text {
+    font-size: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tc-enter {
+    animation: none;
+  }
+}

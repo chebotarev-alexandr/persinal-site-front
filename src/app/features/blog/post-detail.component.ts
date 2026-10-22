@@ -5,13 +5,14 @@ import { map } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 import { ContentService } from '../../core/services/content.service';
+import { MarkdownPipe } from '../../shared/markdown.pipe';
 import type { Post } from '../../core/models/models';
 import { formatDate } from '../../shared/format';
 
 @Component({
   selector: 'app-post-detail',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [RouterLink, MarkdownPipe],
   templateUrl: './post-detail.component.html',
   styleUrl: './post-detail.component.scss',
 })

@@ -132,22 +132,7 @@
   <section class="section section-alt">
     <div class="container">
       <app-section-heading eyebrow="Отзывы" title="Что говорят клиенты" center />
-      <div class="grid-3">
-        @for (t of testimonials(); track t.id) {
-          <figure class="card testimonial" appReveal>
-            <div class="t-stars" aria-hidden="true">
-              @for (i of [1, 2, 3, 4, 5]; track i) {
-                <span [class.dim]="i > t.rating">★</span>
-              }
-            </div>
-            <blockquote class="t-text">{{ t.text }}</blockquote>
-            <figcaption class="t-author">
-              <span class="t-name">{{ t.author }}</span>
-              <span class="t-role">{{ t.position }}@if (t.company) { · {{ t.company }} }</span>
-            </figcaption>
-          </figure>
-        }
-      </div>
+      <app-testimonial-carousel [testimonials]="testimonials()" />
     </div>
   </section>
 }
